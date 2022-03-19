@@ -1,3 +1,6 @@
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 from dash import Dash
 import pandas as pd
 from dash import dcc
@@ -57,7 +60,7 @@ parks_df["State_FullName"] = np.where(parks_df["State"]=="ND", "North Dakota", p
 parks_df["State_FullName"] = np.where(parks_df["State"]=="MN", "Minnesota", parks_df["State_FullName"])
 parks_df["State_FullName"] = np.where(parks_df["State"]=="WY, MT, ID", "Wyoming, Montana,Idaho", parks_df["State_FullName"])
 all_data_df = pd.merge(left=parks_df, right=species_df, how='right')
-
+# all_data_df=pd.concat((parks_df, species_df), join='inner',axis=1)
 NativeEffectiveness_df = pd.DataFrame(all_data_df[all_data_df["Nativeness"]=="Native"].groupby(["Region","Category","Nativeness","Occurrence","Abundance"]).size(),columns=["Count"])
 NativeEffectiveness_df.reset_index(inplace=True)
 
